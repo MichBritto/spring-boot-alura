@@ -1,25 +1,28 @@
 package br.com.fatec.demo.modelo;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity //mostra que é uma classe de Entidade para o JPA
 public class Topico {
 
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) //usado para adicionar auto incremento ao Id
 	private Long id;
 	private String titulo;
 	private String mensagem;
 	private LocalDateTime dataCriacao = LocalDateTime.now();
+	@Enumerated(EnumType.STRING)//O enum por padrão guarda o numero da ordem, entao, para guardar o tipo do enum, é preciso fazer essa conversão
 	private StatusTopico status = StatusTopico.NAO_RESPONDIDO;
+	@ManyToOne // declara realacionamento, um autor pode criar muitos tópicos, e um tópico pode ser de um unico autor
 	private Usuario autor;
+	@ManyToOne //Curso pode ter vários tópicos, mas o tópico só pertence a um curso
 	private Curso curso;
+	@OneToMany(mappedBy = "topico") //Um tópico pode ter várias respostas
 	private List<Resposta> respostas = new ArrayList<>();
 
-	public Topico(String titulo, String mensagem, Curso curso) {
-		this.titulo = titulo;
-		this.mensagem = mensagem;
-		this.curso = curso;
-	}
+
 
 	@Override
 	public int hashCode() {
