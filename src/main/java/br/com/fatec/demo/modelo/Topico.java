@@ -23,6 +23,15 @@ public class Topico {
 	private List<Resposta> respostas = new ArrayList<>();
 
 
+	//Construtor
+	public Topico(String titulo,String mensagem,Curso curso){
+		this.titulo = titulo;
+		this.mensagem = mensagem;
+		this.curso = curso;
+	}
+	public Topico(){
+
+	}
 
 	@Override
 	public int hashCode() {
