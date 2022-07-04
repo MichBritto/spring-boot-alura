@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Resposta {
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) //garantir o auto incremento do id
 	private Long id;
 	private String mensagem;
 	@ManyToOne
