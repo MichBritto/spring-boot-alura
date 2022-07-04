@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController //utilizando essa anotação não se torna necessário utilizar @ResponseBody
 
@@ -52,9 +53,19 @@ public class TopicosController {
     }
 
     @GetMapping("/{id}") //especificando que para entrar nesse metodo get é necessário passar id
-    public DetalhesTopicoDto detalhar(@PathVariable Long id){//para indicar que o id deve ir para a URL, deve ter o mesmo nome que o id do @GetMapping
+    public ResponseEntity<DetalhesTopicoDto> detalhar(@PathVariable Long id){//para indicar que o id deve ir para a URL, deve ter o mesmo nome que o id do @GetMapping
+
+        Optional<Topico> topico = topicoRepository.findById(id);//passa um ID especifico para ser buscado, mas podendo nao existir no banco
+        if(topico.isPresent()){//se existe o topico procurado
+            return ResponseEntity.ok(new DetalhesTopicoDto(topico.get())); //retornando somente os dados necessários através da classe Dto
+        }
+        
+        return ResponseEntity.notFound().build(); //construindo um erro 404
+
+        /* ANTIGO
         Topico topico = topicoRepository.getReferenceById(id);//passa um ID especifico para ser buscado
         return new DetalhesTopicoDto(topico); //retornando somente os dados necessários através da classe Dto
+         */
     }
 
     @PutMapping("/{id}")//metodo para atualIzar dados por meio do Id
