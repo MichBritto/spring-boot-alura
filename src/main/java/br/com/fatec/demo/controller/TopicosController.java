@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +39,7 @@ public class TopicosController {
 
     @PostMapping //usado para indicar que é um método de cadastro de dados
     /*ResponseEntity para nao retornar um '200' generico*/
-    public ResponseEntity<TopicoDto>  cadastrar(@RequestBody TopicoForm topicoForm, UriComponentsBuilder uriBuilder){ //@RequestBody diferencia o parametro, pois como é um método de cadastro, precisa diferenciar que eu quero que as informaÇões venham no corpo da requisição
+    public ResponseEntity<TopicoDto>  cadastrar(@RequestBody @Valid TopicoForm topicoForm, UriComponentsBuilder uriBuilder){ //@RequestBody diferencia o parametro, pois como é um método de cadastro, precisa diferenciar que eu quero que as informaÇões venham no corpo da requisição | @Valid anotação necessária para realizar validação de campos
         Topico topico = topicoForm.converter(cursoRepository); //cria um topicoForm passando um parametro de nome do curso para o cursoRepository
         topicoRepository.save(topico); //usado para guardar informaçôes, através do repository que extends Jpa
 
